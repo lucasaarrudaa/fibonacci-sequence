@@ -49,7 +49,7 @@ while escolha_usuario == "S":
             # Se o número estiver na sequência, mostra a posição.
             if nro_escolhido in fibo_list:
                 index_lista = [n for n, x in enumerate(fibo_list) if x== nro_escolhido]
-                index = int(index_lista[0] + 2)
+                index = int(index_lista[0] + 1)
 
                 #tranformando a lista em string
                 print(f"O número {nro_escolhido} está na sequência de Fibonacci, é o {index}° número\n")
@@ -62,11 +62,10 @@ while escolha_usuario == "S":
                     continue
                 elif continua_solicitacao == "X":
                     break
-        break
 
-    # se não, manda mensagem que não encontrou.
-    else:
-        print(f" O número {nro_escolhido} não está na sequência de Fibonacci")
+            else:
+                print(f"O número {nro_escolhido} não está na sequência de Fibonacci")
+                break
         break
 
     # Se o usuário escolher sair, para o programa
