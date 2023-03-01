@@ -8,12 +8,17 @@ print("Deseja descobrir se algum número pertence à sequencia?\n"
       "Se deseja sair, digite [X]")
 
 escolha_usuario = str(input().strip().upper())
-while escolha_usuario == "S":
+continua_solicitacao = ""
 
+while escolha_usuario == "S" or continua_solicitacao == "S":
     #executando
+
     while True:
         fibo_list = []
         nro_escolhido = 0
+        if continua_solicitacao == "x":
+            break
+
         while True:
             try:
                 nro_escolhido = int(input("Número que deseja verificar: \n"))
@@ -43,28 +48,29 @@ while escolha_usuario == "S":
             print("********************************************")
             print("Aguarde um momento enquanto estou calculando")
             print("********************************************\n")
-            sleep(2)
             limite()
+            if continua_solicitacao == "X" or continua_solicitacao == "S":
+                break
 
             # Se o número estiver na sequência, mostra a posição.
             if nro_escolhido in fibo_list:
                 index_lista = [n for n, x in enumerate(fibo_list) if x== nro_escolhido]
                 index = int(index_lista[0] + 1)
 
-                #tranformando a lista em string
+                # Mostra sua posição e pergunta se quer continuar jogando.
                 print(f"O número {nro_escolhido} está na sequência de Fibonacci, é o {index}° número\n")
-
-                # Pergunta se o usuário deseja seguir
-                continua_solicitacao = input(str("Se deseja verificar outro número digite [S]\n "
-                                                "se quiser parar, digite [X]").strip())
                 sleep(1)
-                if continua_solicitacao == "S":
-                    continue
-                elif continua_solicitacao == "X":
-                    break
+                continua_solicitacao = input(str("Se deseja verificar outro número digite [S]\n"
+                                                "se quiser parar, digite [X]").strip())  
+                nro_escolhido = 0
+                break 
 
+                # Diz que nao está na sequencia e pergunta se quer continuar jogando
             else:
                 print(f"O número {nro_escolhido} não está na sequência de Fibonacci")
+                sleep(1)
+                continua_solicitacao = input(str("Se deseja verificar outro número digite [S]\n"
+                                                "se quiser parar, digite [X]").strip())
                 break
         break
 
