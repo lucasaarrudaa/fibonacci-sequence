@@ -4,7 +4,7 @@ import re
 print("\nA Sequência de Fibonacci se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores\n"
       "(exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...)\n")
 print("Deseja descobrir se algum número pertence à sequencia?\n"
-      "Se sim, digite [S]\n"
+      "\nSe sim, digite [S]\n"
       "Se deseja sair, digite [X]")
 
 escolha_usuario = str(input().strip().upper())
@@ -21,7 +21,7 @@ while escolha_usuario == "S" or continua_solicitacao == "S":
 
         while True:
             try:
-                nro_escolhido = int(input("Número que deseja verificar: \n"))
+                nro_escolhido = int(input("\nNúmero que deseja verificar:"))
                 if not 0 <= nro_escolhido <= 500000:
                     raise ValueError("Por favor, pode digitar um número menor que 500000?")
             except ValueError as e:
@@ -45,9 +45,9 @@ while escolha_usuario == "S" or continua_solicitacao == "S":
                 fibo_list.append(fibo(val))
 
         while True:
-            print("********************************************")
+            print("\n********************************************")
             print("Aguarde um momento enquanto estou calculando")
-            print("********************************************\n")
+            print("********************************************")
             limite()
             if continua_solicitacao == "X" or continua_solicitacao == "S":
                 break
@@ -58,22 +58,23 @@ while escolha_usuario == "S" or continua_solicitacao == "S":
                 index = int(index_lista[0] + 1)
 
                 # Mostra sua posição e pergunta se quer continuar jogando.
-                print(f"O número {nro_escolhido} está na sequência de Fibonacci, é o {index}° número\n")
+                print(f"\nO número {nro_escolhido} está na sequência de Fibonacci, e é o {index}° número\n")
                 sleep(1)
-                continua_solicitacao = input(str("Se deseja verificar outro número digite [S]\n"
-                                                "se quiser parar, digite [X]").strip())  
+                continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
+                                                "se quiser parar, digite [X]\n").strip())  
                 nro_escolhido = 0
                 break 
 
                 # Diz que nao está na sequencia e pergunta se quer continuar jogando
             else:
-                print(f"O número {nro_escolhido} não está na sequência de Fibonacci")
+                print(f"\nO número {nro_escolhido} não está na sequência de Fibonacci")
                 sleep(1)
-                continua_solicitacao = input(str("Se deseja verificar outro número digite [S]\n"
-                                                "se quiser parar, digite [X]").strip())
+                continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
+                                                "se quiser parar, digite [X\n").strip())
                 break
         break
 
     # Se o usuário escolher sair, para o programa
     if escolha_usuario == "X":
         break
+        print("fechando o programa...")
