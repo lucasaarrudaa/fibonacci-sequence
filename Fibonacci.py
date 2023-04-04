@@ -1,80 +1,74 @@
 from time import sleep
-import re
 
-print("\nA Sequência de Fibonacci se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores\n"
-      "(exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...)\n")
-print("Deseja descobrir se algum número pertence à sequencia?\n"
-      "\nSe sim, digite [S]\n"
-      "Se deseja sair, digite [X]")
+class Fibonacci:
+    def __init__(self):
+        self.fibo_list = []
 
-escolha_usuario = str(input().strip().upper())
-continua_solicitacao = ""
+    def fibo(self, n):
+        if n == 1:
+            return 0
+        elif n == 2:
+            return 1
+        else:
+            return self.fibo(n - 1) + self.fibo(n - 2)
 
-while escolha_usuario == "S" or continua_solicitacao == "S":
-    #executando
+    def limite(self, nro_escolhido):
+        n = 1
+        while self.fibo(n) <= nro_escolhido:
+            self.fibo_list.append(self.fibo(n))
+            n += 1
+
+    def verificar_numero(self, nro_escolhido):
+        self.fibo_list = []
+        self.limite(nro_escolhido)
+
+        if nro_escolhido in self.fibo_list:
+            index_lista = [n for n, x in enumerate(self.fibo_list) if x == nro_escolhido]
+            index = int(index_lista[0] + 1)
+            print(f"\nO número {nro_escolhido} está na sequência de Fibonacci, e é o {index}° número\n")
+            sleep(1)
+            continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
+                                            "se quiser parar, digite [X]\n").strip().lower())
+            if continua_solicitacao == "x":
+                print("Fechando o Programa...")
+                exit()
+        else:
+            print(f"\nO número {nro_escolhido} não está na sequência de Fibonacci")
+            sleep(1)
+            continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
+                                            "se quiser parar, digite [X]\n").strip().lower())
+            if continua_solicitacao == "x":
+                print("Fechando o Programa...")
+                exit()
+
+
+if __name__ == '__main__':
+    fibo = Fibonacci()
+
+    print("\nA Sequência de Fibonacci se inicia por 0 e 1 e o próximo valor sempre será a soma dos 2 valores anteriores\n"
+          "(exemplo: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...)\n")
+    print("Deseja descobrir se algum número pertence à sequencia?\n"
+          "\nSe sim, digite [S]\n"
+          "Se deseja sair, digite [X]")
 
     while True:
-        fibo_list = []
-        nro_escolhido = 0
-        if continua_solicitacao == "x":
+        escolha_usuario = input().strip().lower()
+
+        if escolha_usuario == "x":
             break
 
         while True:
-            try:
-                nro_escolhido = int(input("\nNúmero que deseja verificar:"))
-                if not 0 <= nro_escolhido <= 500000:
-                    raise ValueError("Por favor, pode digitar um número menor que 500000?")
-            except ValueError as e:
-                print("Valor inválido:", e)
-            else:
-                break
+            nro_escolhido = 0
 
-        # definindo a fórmula:
-        def fibo(n):
-            if n == 1:
-                return 0
-            elif n == 2:
-                return 1
-            else:
-                return fibo(n - 1) + fibo(n - 2)
+            while True:
+                try:
+                    nro_escolhido = int(input("\nNúmero que deseja verificar: "))
+                    if not 0 <= nro_escolhido <= 500000:
+                        raise ValueError("Por favor, pode digitar um número menor que 500000?")
+                except ValueError as e:
+                    print("Valor inválido:", e)
+                else:
+                    break
 
-        # define um limite para a sequencia
-        def limite():
-            n = 35
-            for val in range(1, n + 1):
-                fibo_list.append(fibo(val))
-
-        while True:
-            print("\n********************************************")
-            print("Aguarde um momento enquanto estou calculando")
-            print("********************************************")
-            limite()
-            if continua_solicitacao == "X" or continua_solicitacao == "S":
-                break
-
-            # Se o número estiver na sequência, mostra a posição.
-            if nro_escolhido in fibo_list:
-                index_lista = [n for n, x in enumerate(fibo_list) if x== nro_escolhido]
-                index = int(index_lista[0] + 1)
-
-                # Mostra sua posição e pergunta se quer continuar jogando.
-                print(f"\nO número {nro_escolhido} está na sequência de Fibonacci, e é o {index}° número\n")
-                sleep(1)
-                continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
-                                                "se quiser parar, digite [X]\n").strip())  
-                nro_escolhido = 0
-                break 
-
-                # Diz que nao está na sequencia e pergunta se quer continuar jogando
-            else:
-                print(f"\nO número {nro_escolhido} não está na sequência de Fibonacci")
-                sleep(1)
-                continua_solicitacao = input(str("\nSe deseja verificar outro número digite [S]\n"
-                                                "se quiser parar, digite [X\n").strip())
-                break
-        break
-
-    # Se o usuário escolher sair, para o programa
-    if escolha_usuario == "X":
-        break
-        print("fechando o programa...")
+            fibo.verificar_numero(nro_escolhido)
+            
