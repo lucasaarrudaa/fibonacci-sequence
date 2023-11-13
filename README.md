@@ -1,4 +1,3 @@
-# Fibonacci_sequence
 Find out whether or not the number you entered is in the fibonacci sequence, and its position.
 
 ## Description:
