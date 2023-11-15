@@ -1,73 +1,62 @@
+from math import sqrt
 from time import sleep
 
 class Fibonacci:
-    
-    def init(self):
-        self.fibo_list = []
-        
-    def fibo(self, n):
-    if n == 1:
-        return 0
-    elif n == 2:
-        return 1
-    else:
-        return self.fibo(n - 1) + self.fibo(n - 2)
 
-def limit(self, chosen_number):
-    n = 1
-    while self.fibo(n) <= chosen_number:
-        self.fibo_list.append(self.fibo(n))
-        n += 1
+    @staticmethod
+    def is_fibonacci_number(n):
+        """
+        Check if a number is in the Fibonacci sequence using the property that a number 'n' is in the Fibonacci
+        sequence if and only if one or both of (5*n*n + 4) or (5*n*n - 4) is a perfect square.
+        """
+        def is_perfect_square(x):
+            s = int(sqrt(x))
+            return s * s == x
 
-def check_number(self, chosen_number):
-    self.fibo_list = []
-    self.limit(chosen_number)
+        return is_perfect_square(5 * n * n + 4) or is_perfect_square(5 * n * n - 4)
 
-    if chosen_number in self.fibo_list:
-        index_list = [n for n, x in enumerate(self.fibo_list) if x == chosen_number]
-        index = int(index_list[0] + 1)
-        print(f"\nThe number {chosen_number} is in the Fibonacci sequence, and it's the {index}th number\n")
-        sleep(1)
-        continue_request = input(str("\nIf you want to check another number, enter [Y]\n"
-                                      "if you want to stop, enter [X]\n").strip().lower())
-        if continue_request == "x":
-            print("Closing the Program...")
-            exit()
-    else:
-        print(f"\nThe number {chosen_number} is not in the Fibonacci sequence")
-        sleep(1)
-        continue_request = input(str("\nIf you want to check another number, enter [Y]\n"
-                                      "if you want to stop, enter [X]\n").strip().lower())
-        if continue_request == "x":
-            print("Closing the Program...")
-            exit()
-            
-if __name__ == '__main__':
-    
-    fibo = Fibonacci()
+def get_user_choice():
+    """
+    Ask the user if they want to check a number in the Fibonacci sequence.
+    Limit the number of attempts to 3 for avoiding infinite loops.
+    """
+    attempts = 0
+    while attempts < 3:
+        user_choice = input("Do you want to check a number in the Fibonacci sequence? [Y/N]: ").strip().lower()
+        if user_choice in ["y", "n"]:
+            return user_choice
+        else:
+            print("Invalid input. Please enter 'Y' for yes or 'N' for no.")
+            attempts += 1
+    return "n"
+
+def get_number():
+    """
+    Get a number from the user to check in the Fibonacci sequence.
+    Ensure the number is within a specified range.
+    """
+    while True:
+        try:
+            chosen_number = int(input("\nNumber to be checked: "))
+            if not 0 <= chosen_number <= 10000000:
+                raise ValueError("Number out of range. Please enter a number between 0 and 10,000,000.")
+            return chosen_number
+        except ValueError as e:
+            print("Invalid value:", e)
+
+def main():
     print("\nThe Fibonacci Sequence starts with 0 and 1, and the next value will always be the sum of the 2 previous values\n"
           "(example: 0, 1, 1, 2, 3, 5, 8, 13, 21, 34...)\n")
-    print("Do you want to find out if a number belongs to the sequence?\n"
-          "\nIf yes, enter [Y]\n"
-          "If you want to exit, enter [X]")
 
-    while True:
-        user_choice = input().strip().lower()
+    while get_user_choice() == 'y':
+        chosen_number = get_number()
+        if Fibonacci.is_fibonacci_number(chosen_number):
+            print(f"\nThe number {chosen_number} is in the Fibonacci sequence\n")
+        else:
+            print(f"\nThe number {chosen_number} is not in the Fibonacci sequence")
+        sleep(1)
 
-        if user_choice == "x":
-            break
+    print("Exiting program...")
 
-        while True:
-            chosen_number = 0
-
-            while True:
-                try:
-                    chosen_number = int(input("\nNumber to be checked: "))
-                    if not 0 <= chosen_number <= 500000:
-                        raise ValueError("Please enter a number smaller than 500000?")
-                except ValueError as e:
-                    print("Invalid value:", e)
-                else:
-                    break
-
-            fibo.check_number(chosen_number)
+if __name__ == '__main__':
+    main()
